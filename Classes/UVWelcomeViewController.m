@@ -155,7 +155,7 @@
 
     if ([UVSession currentSession].config.showKnowledgeBase && ([[UVSession currentSession].topics count] > 0 || [[UVSession currentSession].articles count] > 0))
         sections++;
-    
+
     if ([UVSession currentSession].config.showForum || [UVSession currentSession].config.showContactUs || [UVSession currentSession].config.showPostIdea)
         sections++;
 
@@ -219,8 +219,18 @@
         return NSLocalizedStringFromTableInBundle(@"Knowledge Base", @"UserVoice", [UserVoice bundle], nil);
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+  if (section == 0) {
+    return [UVSession currentSession].config.customWelcomeViewHeader;
+  }
+
+  return nil;
+}
+
 - (CGFloat)tableView:(UITableView *)theTableView heightForHeaderInSection:(NSInteger)section {
-    return 30;
+    UIView *customHeader = [self tableView:theTableView viewForHeaderInSection:section];
+    return customHeader ? CGRectGetHeight(customHeader.frame) : 30;
 }
 
 - (void)logoTapped {
@@ -322,11 +332,11 @@
         if ([UVSession currentSession].config.showForum ) {
             _searchController.searchBar.scopeButtonTitles = @[NSLocalizedStringFromTableInBundle(@"All", @"UserVoice", [UserVoice bundle], nil), NSLocalizedStringFromTableInBundle(@"Articles", @"UserVoice", [UserVoice bundle], nil), NSLocalizedStringFromTableInBundle(@"Ideas", @"UserVoice", [UserVoice bundle], nil)];
         }
-        
+
         if (FORMSHEET) {
             _searchController.hidesNavigationBarDuringPresentation = NO;
         }
-        
+
         _tableView.tableHeaderView = _searchController.searchBar;
     }
 
@@ -352,7 +362,7 @@
     if (_instantAnswerManager) {
         _instantAnswerManager.delegate = nil;
     }
-    
+
     if (_searchController) {
         _searchController.searchResultsUpdater = nil;
     }

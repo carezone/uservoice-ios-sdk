@@ -33,6 +33,7 @@
 @property (nonatomic, assign) BOOL showKnowledgeBase;
 @property (nonatomic, retain) NSString* extraTicketInfo;
 @property (nonatomic, retain) NSDictionary *userTraits;
+@property (nonatomic, retain) UIView *customWelcomeViewHeader;
 
 - (void)identifyUserWithEmail:(NSString *)email name:(NSString *)name guid:(NSString *)guid;
 
