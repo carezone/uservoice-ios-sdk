@@ -221,7 +221,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-  if (section == 0) {
+  if (section == 0 && tableView == _tableView) {
     return [UVSession currentSession].config.customWelcomeViewHeader;
   }
 
@@ -354,8 +354,11 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [_tableView reloadData];
     [super viewWillAppear:animated];
+
+    if (_searchController.isActive == NO) {
+        [_tableView reloadData];
+    }
 }
 
 - (void)dealloc {
